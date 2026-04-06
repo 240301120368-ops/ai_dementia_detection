@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #F0FEFF; /* A very light cyan as a fallback */
+    background-image: linear-gradient(to bottom right, #E0F7FA, #FFFFFF);
+}
+
+/* Smooth scrolling for anchor links */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Styles for Modals and Spinners */
+.modal {
+    display: flex; /* Use flex to center, controlled by 'hidden' class in Tailwind */
+    transition: opacity 0.3s ease;
+}
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border-left-color: #00796B; /* brand-teal */
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Password requirement styles */
+#password-requirements p {
+    transition: color 0.2s ease-in-out;
+}
+
+#password-requirements p.invalid {
+    color: #6b7280; /* gray-500 */
+}
+
+#password-requirements p.invalid svg {
+    transform: scale(0);
+}
+
+#password-requirements p.valid {
+    color: #10b981; /* green-500 */
+}
+
+#password-requirements p.valid svg {
+    transform: scale(1);
+}
+
+
+
+#password-requirements p svg {
+
+    transition: transform 0.2s ease-in-out;
+
+}
+
+
+
+/* Crosshair Animation */
+
+.crosshair-label {
+
+    transition: transform 0.2s ease-in-out, box-shadow 0.3s ease;
+
+}
+
+
+
+.crosshair-label:hover {
+
+    transform: scale(1.05);
+
+    box-shadow: 0 0 15px rgba(0, 121, 107, 0.3);
+
+}
+
+
+
+.crosshair-label.clicked {
+
+    animation: crosshair-pop 0.3s ease-out;
+
+}
+
+
+
+@keyframes crosshair-pop {
+
+    0% {
+
+        transform: scale(1.05);
+
+    }
+
+    50% {
+
+        transform: scale(1.15);
+
+    }
+
+    100% {
+
+        transform: scale(1.05);
+
+    }
+
+}

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard - NeuroCare AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        'brand-teal': '#00796B',
+                        'brand-teal-light': '#4DB6AC',
+                        'brand-cyan': '#E0F7FA',
+                        'brand-gray': '#424242',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-brand-cyan font-sans">
+
+    <!-- Header / Navigation -->
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-brand-teal">NeuroCare AI</a>
+            <div class="hidden lg:flex space-x-4 items-center">
+                <a href="camera.html" class="text-brand-gray hover:text-brand-teal">Camera & Questionnaire</a>
+                <a href="index.html#screening" class="text-brand-gray hover:text-brand-teal">New Screening</a>
+                <a href="dashboard.html" class="text-brand-teal font-semibold">Dashboard</a>
+                <button id="logout-btn" class="bg-white text-brand-teal px-6 py-2 rounded-full hover:bg-gray-100 transition-colors border border-gray-200">Logout</button>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="lg:hidden block">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brand-teal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden">
+            <a href="index.html#screening" class="block py-2 px-4 text-sm text-brand-gray hover:bg-brand-cyan">New Screening</a>
+            <a href="dashboard.html" class="block py-2 px-4 text-sm text-brand-gray hover:bg-brand-cyan">Dashboard</a>
+            <div class="px-4 py-2">
+                <button id="mobile-logout-btn" class="w-full text-center bg-brand-teal text-white px-6 py-2 rounded-full hover:bg-brand-teal-light transition-colors">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+        <h1 class="text-4xl font-bold text-brand-gray mb-8">Your Wellness Journey</h1>
+
+        <div id="assessment-history-container" class="space-y-6">
+            <!-- Loading State -->
+            <div id="history-loading" class="text-center py-10">
+                <div class="spinner mx-auto"></div>
+                <p class="text-brand-gray mt-4">Loading your history...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div id="history-empty" class="hidden text-center py-10 bg-white rounded-2xl shadow-md">
+                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                </svg>
+                <h3 class="mt-2 text-sm font-medium text-gray-900">Your journey starts here</h3>
+                <p class="mt-1 text-sm text-gray-500">Take your first wellness check-up to see your results.</p>
+                <div class="mt-6">
+                    <a href="index.html#screening" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-brand-teal hover:bg-brand-teal-light">
+                        Start Your First Check-up
+                    </a>
+                </div>
+            </div>
+
+            <!-- History items will be injected here by JavaScript -->
+        </div>
+    </main>
+
+    <!-- Security Section -->
+    <div class="container mx-auto px-6 mt-8">
+        <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-6">
+            <h2 class="text-xl font-bold text-brand-gray">Account Security (2FA)</h2>
+            <div id="2fa-status-enabled" class="hidden mt-4">
+                <p class="text-green-700 bg-green-100 p-3 rounded-lg">Two-Factor Authentication is currently <span class="font-bold">ENABLED</span> on your account.</p>
+                <button id="show-disable-2fa-modal-btn" class="mt-4 bg-yellow-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-yellow-600 transition-colors">
+                    Disable 2FA
+                </button>
+            </div>
+            <div id="2fa-status-disabled" class="hidden mt-4">
+                <p class="text-gray-600">Protect your private health information with an extra layer of security. When you log in, you'll need a code from your phone in addition to your password.</p>
+                <button id="enable-2fa-btn" class="mt-4 bg-brand-teal text-white px-4 py-2 rounded-full font-semibold hover:bg-brand-teal-light transition-colors">
+                    Enable 2FA
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Danger Zone -->
+    <div class="container mx-auto px-6 mt-8 mb-12">
+        <div class="max-w-4xl mx-auto bg-red-50 border border-red-200 rounded-2xl p-6">
+            <h2 class="text-xl font-bold text-red-800">Account Management</h2>
+            <div class="mt-4 flex flex-col md:flex-row justify-between items-start md:items-center">
+                <div>
+                    <h3 class="font-semibold text-red-700">Delete Account</h3>
+                    <p class="text-sm text-red-600 mt-1">This will permanently remove your account and all of your health data. This action cannot be undone.</p>
+                </div>
+                <button id="delete-account-btn" class="mt-4 md:mt-0 bg-red-600 text-white px-4 py-2 rounded-full font-semibold hover:bg-red-700 transition-colors flex-shrink-0">
+                    Delete Account
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Account Confirmation Modal -->
+    <div id="delete-confirm-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md relative">
+            <h2 class="text-2xl font-bold text-brand-gray text-center mb-4">Are you absolutely sure?</h2>
+            <p class="text-center text-gray-600 mb-6">This will permanently delete your account and all assessment history. This action cannot be undone.</p>
+            <div class="flex justify-center gap-4">
+                <button id="cancel-delete-btn" class="bg-gray-200 text-gray-800 px-6 py-2 rounded-full font-semibold hover:bg-gray-300">
+                    Cancel
+                </button>
+                <button id="confirm-delete-btn" class="bg-red-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-red-700">
+                    Yes, delete my account
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2FA Setup Modal -->
+    <div id="2fa-setup-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md relative">
+            <button id="close-2fa-setup-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">&times;</button>
+            <h2 class="text-2xl font-bold text-brand-gray text-center mb-2">Set Up 2FA</h2>
+            <p class="text-center text-sm text-gray-500 mb-4">Scan the QR code with your authenticator app (e.g., Google Authenticator, Authy).</p>
+            <div class="flex justify-center my-4 p-4 bg-white border rounded-lg">
+                <img id="qr-code-img" src="" alt="QR Code for 2FA setup" class="w-48 h-48">
+            </div>
+            <p class="text-center text-sm text-gray-500 mb-4">Then, enter the 6-digit code from your app to verify.</p>
+            <form id="2fa-enable-form">
+                <div class="mb-4">
+                    <label for="2fa-setup-code" class="block text-sm font-medium text-gray-700">Verification Code</label>
+                    <input type="text" id="2fa-setup-code" required class="mt-1 block w-full text-center tracking-[0.5em] text-lg font-bold px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-teal focus:border-brand-teal" maxlength="6" autocomplete="off">
+                </div>
+                <p id="2fa-enable-error" class="text-red-500 text-sm text-center mb-4 hidden"></p>
+                <button type="submit" class="w-full bg-brand-teal text-white py-2 px-4 rounded-full font-semibold hover:bg-brand-teal-light">Verify & Enable</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Disable 2FA Confirmation Modal -->
+    <div id="2fa-disable-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md relative">
+            <button id="close-2fa-disable-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">&times;</button>
+            <h2 class="text-2xl font-bold text-brand-gray text-center mb-2">Disable 2FA</h2>
+            <p class="text-center text-sm text-gray-500 mb-6">For your security, please enter your password to confirm.</p>
+            <form id="2fa-disable-form">
+                <div class="mb-4">
+                    <label for="2fa-disable-password" class="block text-sm font-medium text-gray-700">Your Password</label>
+                    <input type="password" id="2fa-disable-password" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-teal focus:border-brand-teal" autocomplete="current-password">
+                </div>
+                <p id="2fa-disable-error" class="text-red-500 text-sm text-center mb-4 hidden"></p>
+                <button type="submit" class="w-full bg-red-600 text-white py-2 px-4 rounded-full font-semibold hover:bg-red-700">Confirm & Disable</button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroCare AI - Early Dementia Detection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+    <script>
+        // Custom Tailwind CSS configuration
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-indigo-dark': '#283593',
+                        'brand-indigo-light': '#5C6BC0',
+                        'brand-blue-soft': '#E3F2FD',
+                        'brand-blue-medium': '#BBDEFB',
+                        'brand-gray': '#424242',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-brand-blue-soft font-sans">
+
+    <!-- Header / Navigation -->
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-brand-indigo-dark">NeuroCare AI</a>
+            <div class="hidden lg:flex space-x-8 items-center">
+                <a href="#home" class="text-brand-gray hover:text-brand-indigo-dark">Home</a>
+                <a href="#screening" class="text-brand-gray hover:text-brand-indigo-dark">Screening</a>
+                <a href="#features" class="text-brand-gray hover:text-brand-indigo-dark">Features</a>
+                <a href="#doctors" class="text-brand-gray hover:text-brand-indigo-dark">Doctors</a>
+                <a href="#contact" class="text-brand-gray hover:text-brand-indigo-dark">Contact</a>
+            </div>
+            <div class="hidden lg:block">
+                <a href="#" id="login-signup-btn" class="bg-brand-indigo-dark text-white px-6 py-2 rounded-full hover:bg-brand-indigo-light transition-colors">Login / Sign Up</a>
+                <div id="user-menu" class="hidden items-center space-x-4">
+                    <a href="dashboard.html" class="text-brand-gray font-medium hover:text-brand-indigo-dark">My Dashboard</a>
+                    <button id="logout-btn" class="bg-white text-brand-indigo-dark px-6 py-2 rounded-full hover:bg-gray-100 transition-colors border border-gray-200">Logout</button>
+                </div>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="lg:hidden block">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brand-indigo-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden">
+            <a href="#home" class="block py-2 px-4 text-sm text-brand-gray hover:bg-brand-blue-soft">Home</a>
+            <a href="#screening" class="block py-2 px-4 text-sm text-brand-gray hover:bg-brand-blue-soft">Screening</a>
+            <a href="#features" class="block py-2 px-4 text-sm text-brand-gray hover:bg-brand-blue-soft">Features</a>
+            <a href="#doctors" class="block py-2 px-4 text-sm text-brand-gray hover:bg-brand-blue-soft">Doctors</a>
+            <a href="#contact" class="block py-2 px-4 text-sm text-brand-gray hover:bg-brand-blue-soft">Contact</a>
+            <div class="px-4 py-2">
+                <a href="#" id="mobile-login-signup-btn" class="block text-center bg-brand-indigo-dark text-white px-6 py-2 rounded-full hover:bg-brand-indigo-light transition-colors">Login / Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6">
+
+        <!-- Hero Section -->
+        <section id="home" class="pt-20 pb-16 md:pt-32 md:pb-24 text-center md:text-left">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <h1 class="text-4xl md:text-5xl font-bold text-brand-gray leading-tight">A Gentle Way to Check On Your Cognitive Health</h1>
+                    <p class="text-lg text-gray-600">Use your voice to get insights into your brain's health. Our compassionate AI is here to help you on your journey.</p>
+                    <div class="flex justify-center md:justify-start space-x-4 pt-4">
+                        <a href="#screening" class="bg-brand-indigo-dark text-white px-8 py-3 rounded-full font-semibold hover:bg-brand-indigo-light transition-colors shadow-lg">Begin Your Free Check-up</a>
+                        <a href="#features" class="bg-white text-brand-indigo-dark px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors border border-gray-200 shadow-lg">Learn More</a>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="bg-white/50 p-8 rounded-3xl shadow-xl">
+                        <svg class="w-full h-auto" viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#E3F2FD;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#BBDEFB;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <rect x="0" y="0" width="200" height="150" fill="url(#grad1)" rx="20"/>
+                            <path d="M 50 120 C 70 90, 130 90, 150 120" stroke="#283593" stroke-width="3" fill="none" stroke-linecap="round"/>
+                            <path d="M 70 90 C 80 70, 120 70, 130 90" stroke="#5C6BC0" stroke-width="2" fill="none" stroke-linecap="round"/>
+                            <circle cx="100" cy="60" r="15" fill="#283593" fill-opacity="0.2"/>
+                            <circle cx="100" cy="60" r="10" fill="#283593"/>
+                            <text x="100" y="145" font-family="Inter, sans-serif" font-size="8" text-anchor="middle" fill="#283593">Cognitive Health Assessment</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Healthcare Solutions Cards -->
+        <section id="solutions" class="py-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-brand-gray">How We Support Your Brain Health</h2>
+                <p class="text-gray-600 mt-2">We look at different aspects of cognition to provide a clearer picture.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Card 1: Speech Analysis -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow text-center">
+                    <div class="bg-brand-blue-soft inline-block p-4 rounded-full mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-indigo-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-brand-gray mb-2">Speech Analysis Test</h3>
+                    <p class="text-gray-500">Our AI analyzes vocal patterns, pauses, and word choices to detect subtle cognitive changes.</p>
+                </div>
+                <!-- Card 2: Memory Assessment -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow text-center">
+                    <div class="bg-brand-blue-soft inline-block p-4 rounded-full mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-indigo-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-brand-gray mb-2">Memory Assessment</h3>
+                    <p class="text-gray-500">Interactive tests designed to evaluate short-term memory and recall abilities.</p>
+                </div>
+                <!-- Card 3: Cognitive Pattern Detection -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow text-center">
+                    <div class="bg-brand-blue-soft inline-block p-4 rounded-full mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-indigo-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M12 21v-2.5M12 3v2.5" /></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-brand-gray mb-2">Cognitive Pattern Detection</h3>
+                    <p class="text-gray-500">The system identifies deviations from cognitive baselines over time.</p>
+                </div>
+                <!-- Card 4: AI Risk Report -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow text-center">
+                    <div class="bg-brand-blue-soft inline-block p-4 rounded-full mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-indigo-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-brand-gray mb-2">AI Risk Report</h3>
+                    <p class="text-gray-500">Get a simple, private report that helps you understand your cognitive wellness.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How Our AI Works -->
+        <section id="how-it-works" class="py-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-brand-gray">How Our AI Works</h2>
+                <p class="text-gray-600 mt-2">A simple, four-step process to assess cognitive health.</p>
+            </div>
+            <div class="relative">
+                <div class="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-brand-blue-medium"></div>
+                <div class="grid md:grid-cols-4 gap-8 text-center relative">
+                    <!-- Step 1 -->
+                    <div class="flex flex-col items-center">
+                        <div class="bg-brand-indigo-dark text-white w-24 h-24 rounded-full flex items-center justify-center text-2xl font-bold z-10 border-4 border-white">1</div>
+                        <h3 class="font-semibold text-lg mt-4 mb-2">You simply speak or answer a few questions</h3>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="flex flex-col items-center">
+                        <div class="bg-brand-indigo-dark text-white w-24 h-24 rounded-full flex items-center justify-center text-2xl font-bold z-10 border-4 border-white">2</div>
+                        <h3 class="font-semibold text-lg mt-4 mb-2">AI analyzes speech and responses</h3>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="flex flex-col items-center">
+                        <div class="bg-brand-indigo-dark text-white w-24 h-24 rounded-full flex items-center justify-center text-2xl font-bold z-10 border-4 border-white">3</div>
+                        <h3 class="font-semibold text-lg mt-4 mb-2">Our AI gently looks for patterns that may suggest cognitive changes</h3>
+                    </div>
+                    <!-- Step 4 -->
+                    <div class="flex flex-col items-center">
+                        <div class="bg-brand-indigo-dark text-white w-24 h-24 rounded-full flex items-center justify-center text-2xl font-bold z-10 border-4 border-white">4</div>
+                        <h3 class="font-semibold text-lg mt-4 mb-2">You receive a private, easy-to-understand wellness report</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Features Section -->
+        <section id="features" class="py-16">
+            <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 class="text-3xl font-bold text-brand-gray mb-4">Advanced Features for Peace of Mind</h2>
+                        <p class="text-gray-600 mb-8">Our platform is built on cutting-edge technology, ensuring accuracy, security, and ease of use.</p>
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 h-10 w-10 rounded-full bg-brand-blue-soft flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brand-indigo-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-semibold text-brand-gray">Early Detection Algorithms</h4>
+                                    <p class="text-gray-500">Trained on vast datasets to identify the earliest signs of cognitive decline.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 h-10 w-10 rounded-full bg-brand-blue-soft flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brand-indigo-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.636 5.636a9 9 0 0112.728 0" /></svg>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-semibold text-brand-gray">Voice Pattern Analysis</h4>
+                                    <p class="text-gray-500">Goes beyond words to analyze the rhythm, tone, and hesitation in speech.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 h-10 w-10 rounded-full bg-brand-blue-soft flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brand-indigo-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 20.417V21h18v-.583a12.02 12.02 0 00-4.382-8.433z" /></svg>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-semibold text-brand-gray">Secure Medical Data</h4>
+                                    <p class="text-gray-500">HIPAA-compliant storage and end-to-end encryption to protect your privacy.</p>
+                                </div>
+                            </div>
+                             <div class="flex items-start">
+                                <div class="flex-shrink-0 h-10 w-10 rounded-full bg-brand-blue-soft flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brand-indigo-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" /></svg>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-semibold text-brand-gray">AI Cognitive Scoring</h4>
+                                    <p class="text-gray-500">Get a quantifiable score of your cognitive health based on multiple factors.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hidden md:block">
+                        <!-- Dashboard UI "Screenshot" -->
+                        <div class="bg-brand-blue-soft p-6 rounded-2xl shadow-inner">
+                            <div class="bg-white rounded-xl p-4">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h4 class="font-bold text-brand-gray">Dementia Analysis</h4>
+                                    <span class="text-sm bg-red-100 text-red-700 px-2 py-1 rounded-full">High Risk</span>
+                                 </div>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between items-center text-sm">
+                                        <span class="text-gray-600">Memory Score</span>
+                                        <div class="w-1/2 bg-gray-200 rounded-full h-2.5"><div class="bg-yellow-500 h-2.5 rounded-full" style="width: 65%"></div></div>
+                                        <span class="font-medium">6.5/10</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-sm">
+                                        <span class="text-gray-600">Speech Coherence</span>
+                                        <div class="w-1/2 bg-gray-200 rounded-full h-2.5"><div class="bg-red-500 h-2.5 rounded-full" style="width: 42%"></div></div>
+                                        <span class="font-medium">4.2/10</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-sm">
+                                        <span class="text-gray-600">Attention</span>
+                                        <div class="w-1/2 bg-gray-200 rounded-full h-2.5"><div class="bg-yellow-500 h-2.5 rounded-full" style="width: 58%"></div></div>
+                                        <span class="font-medium">5.8/10</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4 pt-4 border-t text-center">
+                                    <a href="#" class="text-brand-indigo-dark font-semibold text-sm hover:underline">View Full Report</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Appointment / Screening Section -->
+        <section id="screening" class="py-16">
+            <div class="bg-white text-gray-800 rounded-3xl shadow-xl p-8 md:p-12">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold text-brand-gray">Start Your Voice Check-up</h2>
+                    <p class="text-gray-600 mt-2">Record a short audio clip of your voice. You can talk about your day, a memory, or anything you like for about 30 seconds. The more naturally you speak, the better.</p>
+                </div>
+                
+                <!-- Analysis Form -->
+                <div id="analysis-form-container" class="mt-8 max-w-xl mx-auto">
+                    <form id="analysis-form">
+                        <div class="flex items-center justify-center w-full">
+                            <label for="audio-file" class="crosshair-label flex flex-col items-center justify-center w-full h-32 border-2 border-brand-indigo-light border-dashed rounded-lg cursor-pointer bg-brand-blue-soft hover:bg-brand-blue-medium">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <svg class="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/></svg>
+                                    <p id="file-upload-text" class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                                    <p class="text-xs text-gray-500">WAV, MP3, M4A (MAX. 10MB)</p>
+                                </div>
+                                <input id="audio-file" type="file" class="hidden" accept="audio/*" />
+                            </label>
+                        </div> 
+                        <div class="text-center mt-6">
+                            <button type="submit" id="analyze-btn" class="bg-brand-indigo-dark text-white px-8 py-3 rounded-full font-bold hover:bg-brand-indigo-light transition-colors shadow-lg disabled:bg-gray-400 disabled:cursor-not-allowed" disabled>
+                                Analyze Speech
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Results Display -->
+                <div id="results-container" class="hidden mt-8 max-w-2xl mx-auto bg-brand-blue-soft p-6 rounded-2xl text-center">
+                    <div id="results-loading" class="hidden">
+                        <div class="spinner mx-auto"></div>
+                        <p class="text-brand-gray mt-4">Analyzing... this may take a moment.</p>
+                    </div>
+                    <div id="results-content">
+                        <h3 class="text-2xl font-bold text-brand-gray">Your Analysis Results</h3>
+                        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                            <div class="bg-white p-4 rounded-lg shadow">
+                                <p class="text-sm text-gray-500">Risk Level</p>
+                                <p id="result-label" class="text-xl font-bold text-brand-indigo-dark"></p>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow">
+                                <p class="text-sm text-gray-500">Cognitive Speech Score</p>
+                                <p id="result-score" class="text-xl font-bold text-brand-indigo-dark"></p>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-6">This is a preliminary analysis. Please consult a healthcare professional for a complete diagnosis.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Doctors / Experts Section -->
+        <section id="doctors" class="py-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-brand-gray">Our Team of Experts</h2>
+                <p class="text-gray-600 mt-2">Backed by leading neurologists, AI researchers, and cognitive therapists.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Doctor 1 -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg text-center">
+                    <div class="w-32 h-32 rounded-full mx-auto bg-brand-blue-soft mb-4 flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-brand-indigo-light" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
+                    <h3 class="text-xl font-semibold text-brand-gray">Dr. Evelyn Reed</h3>
+                    <p class="text-brand-indigo-light">Neurologist</p>
+                </div>
+                <!-- Doctor 2 -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg text-center">
+                    <div class="w-32 h-32 rounded-full mx-auto bg-brand-blue-soft mb-4 flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-brand-indigo-light" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
+                    <h3 class="text-xl font-semibold text-brand-gray">Dr. Ben Carter</h3>
+                    <p class="text-brand-indigo-light">AI Specialist</p>
+                </div>
+                <!-- Doctor 3 -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg text-center">
+                    <div class="w-32 h-32 rounded-full mx-auto bg-brand-blue-soft mb-4 flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-brand-indigo-light" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
+                    <h3 class="text-xl font-semibold text-brand-gray">Dr. Olivia Chen</h3>
+                    <p class="text-brand-indigo-light">Cognitive Therapist</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-white mt-16">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold text-brand-indigo-dark mb-4">NeuroCare AI</h3>
+                    <p class="text-gray-500">AI-powered tools for early detection of cognitive decline.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-brand-gray mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-500 hover:text-brand-indigo-dark">Home</a></li>
+                        <li><a href="#screening" class="text-gray-500 hover:text-brand-indigo-dark">Screening</a></li>
+                        <li><a href="#features" class="text-gray-500 hover:text-brand-indigo-dark">Features</a></li>
+                        <li><a href="#doctors" class="text-gray-500 hover:text-brand-indigo-dark">Doctors</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-brand-gray mb-4">Contact</h4>
+                    <p class="text-gray-500">123 Health Tech Ave,<br>Innovation City, 10101</p>
+                    <p class="text-gray-500 mt-2">contact@neurocare.ai</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-brand-gray mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <!-- Placeholder for social icons -->
+                        <a href="#" class="text-gray-500 hover:text-brand-indigo-dark"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg></a>
+                        <a href="#" class="text-gray-500 hover:text-brand-indigo-dark"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.71v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg></a>
+                        <a href="#" class="text-gray-500 hover:text-brand-indigo-dark"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12.011c0 4.434 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.03-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12.011C22 6.477 17.523 2 12 2z" clip-rule="evenodd" /></svg></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 border-t pt-8 text-center text-gray-500">
+                <p class="text-sm"><strong>Disclaimer:</strong> Your well-being is our top priority. This tool is for informational purposes and is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider.</p>
+                <p class="mt-4">&copy; 2024 NeuroCare AI. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Login Modal -->
+    <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md relative">
+            <button id="close-login-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">&times;</button>
+            <h2 class="text-2xl font-bold text-brand-gray text-center mb-6">Login to NeuroCare AI</h2>
+            <form id="login-form">
+                <div class="mb-4">
+                    <label for="login-email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" id="login-email" name="username" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-indigo-dark focus:border-brand-indigo-dark">
+                </div>
+                <div class="mb-6">
+                    <label for="login-password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="login-password" name="password" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-indigo-dark focus:border-brand-indigo-dark">
+                    <div class="text-right mt-2">
+                        <a href="#" id="show-forgot-password-link" class="text-sm font-medium text-brand-indigo-dark hover:underline">Forgot Password?</a>
+                    </div>
+                </div>
+                <p id="login-error" class="text-red-500 text-sm text-center mb-4 hidden"></p>
+                <button type="submit" class="w-full bg-brand-indigo-dark text-white py-2 px-4 rounded-full font-semibold hover:bg-brand-indigo-light">Login</button>
+            </form>
+            <p class="text-center text-sm text-gray-500 mt-4">
+                Don't have an account? <a href="#" id="show-signup-link" class="font-medium text-brand-indigo-dark hover:underline">Sign up</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signup-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md relative">
+            <button id="close-signup-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">&times;</button>
+            <h2 class="text-2xl font-bold text-brand-gray text-center mb-6">Create an Account</h2>
+            <form id="signup-form">
+                <div class="mb-4">
+                    <label for="signup-name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                    <input type="text" id="signup-name" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-indigo-dark focus:border-brand-indigo-dark">
+                </div>
+                <div class="mb-4">
+                    <label for="signup-email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" id="signup-email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-indigo-dark focus:border-brand-indigo-dark">
+                </div>
+                <div class="mb-4">
+                    <label for="signup-password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="signup-password" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-indigo-dark focus:border-brand-indigo-dark" autocomplete="new-password">
+                    <div id="password-requirements" class="mt-2 text-sm space-y-1 hidden">
+                        <p id="req-length" class="flex items-center invalid">
+                            <svg class="w-4 h-4 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            At least 8 characters
+                        </p>
+                        <p id="req-uppercase" class="flex items-center invalid">
+                            <svg class="w-4 h-4 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            An uppercase letter
+                        </p>
+                        <p id="req-lowercase" class="flex items-center invalid">
+                            <svg class="w-4 h-4 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            A lowercase letter
+                        </p>
+                        <p id="req-number" class="flex items-center invalid">
+                            <svg class="w-4 h-4 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            A number
+                        </p>
+                        <p id="req-special" class="flex items-center invalid">
+                            <svg class="w-4 h-4 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            A special character (!@#...)
+                        </p>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="signup-confirm-password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                    <input type="password" id="signup-confirm-password" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-indigo-dark focus:border-brand-indigo-dark" autocomplete="new-password">
+                </div>
+                <p id="signup-error" class="text-red-500 text-sm text-center mb-4 hidden"></p>
+                <p id="signup-success" class="text-green-600 text-sm text-center mb-4 hidden"></p>
+                <button type="submit" class="w-full bg-brand-indigo-dark text-white py-2 px-4 rounded-full font-semibold hover:bg-brand-indigo-light">Create Account</button>
+            </form>
+            <p class="text-center text-sm text-gray-500 mt-4">
+                Already have an account? <a href="#" id="show-login-link" class="font-medium text-brand-indigo-dark hover:underline">Log in</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgot-password-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md relative">
+            <button id="close-forgot-password-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">&times;</button>
+            <h2 class="text-2xl font-bold text-brand-gray text-center mb-6">Reset Your Password</h2>
+            <p class="text-center text-sm text-gray-500 mb-6">Enter your email and we'll send you a link to get back into your account.</p>
+            <form id="forgot-password-form">
+                <div class="mb-4">
+                    <label for="forgot-email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" id="forgot-email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-indigo-dark focus:border-brand-indigo-dark">
+                </div>
+                <p id="forgot-error" class="text-red-500 text-sm text-center mb-4 hidden"></p>
+                <p id="forgot-success" class="text-green-600 text-sm text-center mb-4 hidden"></p>
+                <button type="submit" class="w-full bg-brand-indigo-dark text-white py-2 px-4 rounded-full font-semibold hover:bg-brand-indigo-light">Send Reset Link</button>
+            </form>
+            <p class="text-center text-sm text-gray-500 mt-4">
+                <a href="#" id="back-to-login-link" class="font-medium text-brand-indigo-dark hover:underline">Back to Login</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- 2FA Login Modal -->
+    <div id="2fa-login-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md relative">
+            <button id="close-2fa-login-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">&times;</button>
+            <h2 class="text-2xl font-bold text-brand-gray text-center mb-2">Two-Factor Authentication</h2>
+            <p class="text-center text-sm text-gray-500 mb-6">Enter the 6-digit code from your authenticator app.</p>
+            <form id="2fa-verify-login-form">
+                <div class="mb-4">
+                    <label for="2fa-login-code" class="block text-sm font-medium text-gray-700">Verification Code</label>
+                    <input type="text" id="2fa-login-code" required class="mt-1 block w-full text-center tracking-[0.5em] text-lg font-bold px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-indigo-dark focus:border-brand-indigo-dark" maxlength="6" autocomplete="off">
+                </div>
+                <p id="2fa-login-error" class="text-red-500 text-sm text-center mb-4 hidden"></p>
+                <button type="submit" class="w-full bg-brand-indigo-dark text-white py-2 px-4 rounded-full font-semibold hover:bg-brand-indigo-light">Verify</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Animate sections
+            gsap.utils.toArray('section').forEach((section, i) => {
+                if(section.id !== 'home'){
+                    gsap.from(section, {
+                        opacity: 0,
+                        y: 50,
+                        duration: 1,
+                        scrollTrigger: {
+                            trigger: section,
+                            start: 'top 80%',
+                            toggleActions: 'play none none none',
+                        }
+                    });
+                }
+            });
+
+            // Animate cards within sections
+            gsap.utils.toArray('.grid > div').forEach((card, i) => {
+                if (!card.closest('#home')) { // Don't animate hero cards
+                    gsap.from(card, {
+                        opacity: 0,
+                        y: 50,
+                        duration: 0.5,
+                        scrollTrigger: {
+                            trigger: card,
+                            start: 'top 85%',
+                            toggleActions: 'play none none none',
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
